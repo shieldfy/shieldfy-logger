@@ -14,7 +14,7 @@
  * }
  */
 const shieldfyLogger = (config={}) => {
-    let { service, host = process.env.LOG_HOST, env = process.env.APP_ENV } = config
+    let { service, host = process.env.ELASTICSEARCH_HOST, env = process.env.APP_ENV } = config
     // throw err if no service name
     if (!service) throw new Error('service name is required')
     // throw err if no host param and no LOG_HOST in env

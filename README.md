@@ -39,11 +39,11 @@ logger.error('test error log')
 
 ## Parameters
 
-| parameter | required  | defualt               | description          |
-| --------- | --------  |----------------------	|--------------------- |
-| service   | true     	| _                    	| service name         |
-| host      | false    	| process.env.LOG_HOST 	| elastic search host  |
-| env       | false    	| process.env.APP_ENV  	| the run environment  |
+| parameter | required  | defualt                           | description          |
+| --------- | --------  |---------------------------------- |--------------------- |
+| service   | true      | _                                 | service name         |
+| host      | false     | process.env.ELASTICSEARCH_HOST    | elastic search host  |
+| env       | false     | process.env.APP_ENV               | the run environment  |
 
 ## Contributions
 
