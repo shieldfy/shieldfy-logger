@@ -4,7 +4,7 @@
   "description": "logger using winston and elastic search used to stream logs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"no test specified\""
+    "test": "jest test"
   },
   "keywords": [
     "winston",
@@ -16,6 +16,6 @@
     "winston": "3.2.1",
     "winston-elasticsearch": "0.7.2"
   },
-  "author": "hameed",
+  "author": "shieldfy team",
   "license": "ISC"
 }
