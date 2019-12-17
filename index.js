@@ -17,10 +17,8 @@ const shieldfyLogger = (config = {}) => {
     let { service, host = process.env.ELASTICSEARCH_HOST, env = process.env.APP_ENV } = config
     // throw err if no service name
     if (!service) throw new Error('service name is required')
-    // throw err if no host param and no LOG_HOST in env
-    if (!host && !process.env.LOG_HOST) throw new Error('trying to use process.env.LOG_HOST as host failed')
-    // throw err if no env param and no APP_ENV in env
-    if (!env && !process.env.APP_ENV) throw new Error('trying to use process.env.APP_ENV as env failed')
+    // throw err if no host param and no ELASTICSEARCH_HOST in env
+    if (!host && !process.env.ELASTICSEARCH_HOST) throw new Error('trying to use process.env.ELASTICSEARCH_HOST as host failed')
 
     const winston = require('winston');
     const Elasticsearch = require('winston-elasticsearch');
@@ -49,30 +47,35 @@ const shieldfyLogger = (config = {}) => {
     const es = new Elasticsearch(esTransportOpts)
 
     // creating winston transport file instance
-    const winstonTransport = new winston.transports.File({ filename: "logfile.log", level: 'error' })
+    const winstonTransportFile = new winston.transports.File({ filename: "logfile.log", level: 'error' })
+
+    // creating winston transport console instance
+    const winstonTransportConsole = new winston.transports.Console({ format: winston.format.simple() })
 
     // logger 
     const logger = winston.createLogger({
         level: 'info',
         format: winston.format.json(),
         transports: [
-            winstonTransport, //save errors on file
-            es //everything info and above goes to elastic
+            winstonTransportFile, //save errors on file
+            winstonTransportConsole //log on console
         ],
         exitOnError: false // without it winston stops login after the first uncaught exception
     });
 
     /**
-     * in case of local environment 
-     * remove the elastic search transport
-     * add the simple log
+     * in case of local environment or no env at all
      */
-    if (env === 'local') {
-        logger.remove(es);
-        logger.add(new winston.transports.Console({
-            format: winston.format.simple()
-        }));
-    }
+    if (env === 'local' || !env) return logger
+
+    /**
+     * in case of non local environment 
+     * add the elasticsearch log
+     * and remove the console log
+     */
+
+    logger.remove(winstonTransportConsole);
+    logger.add(es);
 
     return logger
 }

@@ -12,15 +12,7 @@ describe('logger test', () => {
         try {
             const logger = require('../')({service: 'test'})
         } catch (error) {
-            expect(error.message).toEqual('trying to use process.env.LOG_HOST as host failed')
-        }
-    })
-
-    test('host error', () => {
-        try {
-            const logger = require('../')({service: 'test', host: 'localhost'})
-        } catch (error) {
-            expect(error.message).toEqual('trying to use process.env.APP_ENV as env failed')
+            expect(error.message).toEqual('trying to use process.env.ELASTICSEARCH_HOST as host failed')
         }
     })
 
