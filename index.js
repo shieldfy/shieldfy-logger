@@ -13,7 +13,7 @@
  *      error: Function
  * }
  */
-const shieldfyLogger = (config={}) => {
+const shieldfyLogger = (config = {}) => {
     let { service, host = process.env.ELASTICSEARCH_HOST, env = process.env.APP_ENV } = config
     // throw err if no service name
     if (!service) throw new Error('service name is required')
@@ -48,7 +48,7 @@ const shieldfyLogger = (config={}) => {
     // creating es instance
     const es = new Elasticsearch(esTransportOpts)
 
-    // creating winston transport instance
+    // creating winston transport file instance
     const winstonTransport = new winston.transports.File({ filename: "logfile.log", level: 'error' })
 
     // logger 
@@ -62,8 +62,13 @@ const shieldfyLogger = (config={}) => {
         exitOnError: false // without it winston stops login after the first uncaught exception
     });
 
-    // we also log to console if we're not in production
-    if (env !== 'production') {
+    /**
+     * in case of local environment 
+     * remove the elastic search transport
+     * add the simple log
+     */
+    if (env === 'local') {
+        logger.remove(es);
         logger.add(new winston.transports.Console({
             format: winston.format.simple()
         }));
