@@ -1,6 +1,6 @@
 {
   "name": "shieldfy-logger",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "logger using winston and elastic search used to stream logs",
   "main": "index.js",
   "scripts": {
