@@ -29,7 +29,7 @@ const shieldfyLogger = require('shieldfy-logger');
 // initialize the logger
 const logger = shieldfyLogger({ service: 'test-service', host:'http://localhost:9200', env: 'development'})
 
-// const logger = shieldfyLogger({ service: 'test-service'})
+// const logger = shieldfyLogger({ service: 'test-service' })
 
 // start sending logs :)
 logger.info('test info log')
@@ -39,8 +39,8 @@ logger.error('test error log')
 
 ## Parameters
 
-| parameter | required | defualt | description |
-| --------- | -------- ||----------------------	|--------------------- |
+| parameter | required  | defualt               | description          |
+| --------- | --------  |----------------------	|--------------------- |
 | service   | true     	| _                    	| service name         |
 | host      | false    	| process.env.LOG_HOST 	| elastic search host  |
 | env       | false    	| process.env.APP_ENV  	| the run environment  |
