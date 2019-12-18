@@ -49,15 +49,14 @@ const shieldfyLogger = (config = {}) => {
             log: "info"
         },
         transformer: logData => {
-            const transformedData = {
+            return {
                 "@timestamp": new Date().toISOString(),
                 severity: logData.level,
                 service: service,
                 environment: env,
-                message: logData.message.toString(),
+                message: `${logData.message}`,
                 fields: {}
             }
-            return transformedData
         }
     };
 
