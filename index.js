@@ -39,15 +39,7 @@ const shieldfyLogger = (config = {}) => {
     /**
      * in case of local or test environment or no env at all
      */
-    if (env === 'local' || env === 'test' || !env) return winston
-
-    // creating winston transport file instance
-    const winstonTransportFile = new winston.transports.File({ filename: "logfile.log", level: 'error' })
-    /**
-     * in case of non local or test environment
-     * add the File log
-    */
-    winston.add(winstonTransportFile);
+    if (!env || env === 'local' || env === 'test') return winston
 
     // elastic search config
     const esTransportOpts = {
@@ -75,31 +67,14 @@ const shieldfyLogger = (config = {}) => {
     // creating winston transport file instance
     const winstonTransportFile = new winston.transports.File({ filename: "logfile.log", level: 'error' })
 
-    // creating winston transport console instance
-    const winstonTransportConsole = new winston.transports.Console({ level: 'info', format: winston.format.simple() })
-
-    // logger 
-    winston.configure({
-        level: 'info',
-        format: winston.format.json(),
-        transports: [
-            winstonTransportFile, //save errors on file
-            winstonTransportConsole //log on console
-        ],
-        exitOnError: false // without it winston stops login after the first uncaught exception
-    });
-
-    /**
-     * in case of local or test environment or no env at all
-     */
-    if (env === 'local' || env === 'test' || !env) return winston
-
     /**
      * in case of non local or test environment 
      * add the elasticsearch log
+     * add the file log
      * and remove the console log
      */
     winston.add(es);
+    winston.add(winstonTransportFile);
     winston.remove(winstonTransportConsole);
 
     return winston
