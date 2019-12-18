@@ -2,7 +2,7 @@
 /**
  * used to stream logs to elasticsearch server
  * @param {Object} config {
- *      
+ *      service
  *      host
  *      env 
  * } 
@@ -50,10 +50,10 @@ const shieldfyLogger = (config = {}) => {
     const winstonTransportFile = new winston.transports.File({ filename: "logfile.log", level: 'error' })
 
     // creating winston transport console instance
-    const winstonTransportConsole = new winston.transports.Console({ format: winston.format.simple() })
+    const winstonTransportConsole = new winston.transports.Console({ level: 'info', format: winston.format.simple() })
 
     // logger 
-    const logger = winston.createLogger({
+    winston.configure({
         level: 'info',
         format: winston.format.json(),
         transports: [
@@ -64,20 +64,19 @@ const shieldfyLogger = (config = {}) => {
     });
 
     /**
-     * in case of local environment or no env at all
+     * in case of local or test environment or no env at all
      */
-    if (env === 'local' || !env) return logger
+    if (env === 'local' || env === 'test' || !env) return winston
 
     /**
-     * in case of non local environment 
+     * in case of non local or test environment 
      * add the elasticsearch log
      * and remove the console log
      */
+    winston.add(es);
+    winston.remove(winstonTransportConsole);
 
-    logger.remove(winstonTransportConsole);
-    logger.add(es);
-
-    return logger
+    return winston
 }
 
 module.exports = shieldfyLogger
