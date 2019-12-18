@@ -45,11 +45,11 @@ const shieldfyLogger = (config = {}) => {
     const esTransportOpts = {
         level: 'info',
         clientOpts: {
-            node: host,
+            host: host,
             log: "info"
         },
         transformer: logData => {
-            return {
+            const transformedData = {
                 "@timestamp": new Date().toISOString(),
                 severity: logData.level,
                 service: service,
@@ -57,6 +57,7 @@ const shieldfyLogger = (config = {}) => {
                 message: `${logData.message}`,
                 fields: {}
             }
+            return transformedData
         }
     };
 
