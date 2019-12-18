@@ -1,6 +1,6 @@
 # shieldfy-logger
 
-winston-elasticsearh based logger client for log streaming
+winston and winston-elasticsearh based logger client for log streaming
 
 ## Requirements
 
@@ -32,18 +32,20 @@ const logger = shieldfyLogger({ service: 'test-service', host:'http://localhost:
 // const logger = shieldfyLogger({ service: 'test-service' })
 
 // start sending logs :)
-logger.info('test info log')
+logger.info('test info log', { staus: 'success' })
 
-logger.error('test error log')
+logger.error('test error log',  { staus: 'error' })
 ```
+
+**note:** if you want to attach data , pass it in the second parameter. If you pass it by the first parameter it will be strignified and mutated.
 
 ## Parameters
 
-| parameter | required  | defualt                           | description          |
-| --------- | --------  |---------------------------------- |--------------------- |
-| service   | true      | _                                 | service name         |
-| host      | false     | process.env.ELASTICSEARCH_HOST    | elastic search host  |
-| env       | false     | process.env.APP_ENV               | the run environment  |
+| parameter | required | defualt                        | description         |
+| --------- | -------- | ------------------------------ | ------------------- |
+| service   | true     | _                              | service name        |
+| host      | false    | process.env.ELASTICSEARCH_HOST | elastic search host |
+| env       | false    | process.env.APP_ENV            | the run environment |
 
 ## Contributions
 
