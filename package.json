@@ -1,16 +1,21 @@
 {
   "name": "shieldfy-logger",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "logger using winston and elastic search used to stream logs",
   "main": "index.js",
   "scripts": {
     "test": "jest test"
   },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/shieldfy/shieldfy-logger.git"
+  },
   "keywords": [
     "winston",
     "winston-elasticsearch",
     "logger",
-    "log"
+    "log",
+    "shieldfy"
   ],
   "dependencies": {
     "winston": "3.2.1",

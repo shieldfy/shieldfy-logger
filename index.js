@@ -64,7 +64,7 @@ const shieldfyLogger = (config = {}) => {
     // creating es instance
     const es = new Elasticsearch(esTransportOpts)
 
-    // aadiing close the es functionality
+    // adiing close the es functionality
     // usefull in case of a lambda function
     winston.close = () => es.bulkWriter.schedule = () => { };
     // creating winston transport file instance
